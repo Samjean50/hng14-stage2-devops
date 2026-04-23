@@ -1,4 +1,4 @@
-cat > FIXES.md << 'EOF'
+
 # Bug Fixes
 
 ## Fix 1
@@ -66,18 +66,3 @@ cat > FIXES.md << 'EOF'
 - **Line:** 36
 - **Problem:** Polling only stops on `completed` status — if a job enters `failed` state the browser polls forever
 - **Fix:** Added `failed` as a terminal condition to stop polling
-
-
-
-
-
-
-
-## Fix 1
-- **File:** api/main.py
-- **Line:** 12
-- **Problem:** Redis host hardcoded as "localhost" — fails inside Docker containers
-  where services communicate by service name
-- **Fix:** Changed `host="localhost"` to `host=os.getenv("REDIS_HOST", "redis")`
-
-#FileLineProblemFix1api/main.py5Redis host hardcoded as localhost — fails in DockerUse os.getenv("REDIS_HOST", "redis")2api/main.py—No /health endpoint — healthcheck always failsAdded GET /health route3worker/worker.py3Redis host hardcoded as localhostUse os.getenv("REDIS_HOST", "redis")4worker/worker.py—signal imported but never used — no graceful shutdownAdded SIGTERM/SIGINT handlers5worker/worker.py13No error handling — one bad job crashes entire workerWrapped process_job in try/except6frontend/app.js4API URL hardcoded as localhost — fails in DockerUse process.env.API_URL7frontend/app.js—No /health endpoint — healthcheck always failsAdded GET /health route
